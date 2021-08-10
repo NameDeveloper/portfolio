@@ -475,7 +475,7 @@ $colors: (
   // Loop through the map and set CSS custom properties using Sass variables
 @each $button, $color in $colors {
   .#{$button} {
-    --color: #{$color};
+    --color: #ffffff;
     --hover: #{adjust-hue($color, 45deg)};
   }
 }
