@@ -9,4 +9,4 @@ permalink: /error404.html
 
 <centre> Sorry, this page doesn't exsit </centre>
 
-[Return Home](https://namedeveloper.github.io/portfolio/){: .btn}
+[Return Home](https://namedeveloper.github.io/portfolio/)
