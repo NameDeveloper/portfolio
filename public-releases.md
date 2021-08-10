@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Development Preview Version 4"
+title: "Public Releases"
 permalink: /public.html
 ---
 
