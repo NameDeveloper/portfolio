@@ -10,7 +10,7 @@ Hit me up on discord
 
 **Public Work**
 
-My public work is located in the 'Home' Section and are available to be downloaded freely. In some cases, these items have been combined into a pack wich can be found in the 'Vehicle Packs' section. Note that these skins are provied on an as-is basis and will need to be applied to the vehicle manually. I am unable to share the model with the packs due to me not owning them.
+My public work is located in the 'Public Releases' Section and are available to be downloaded freely. In some cases, these items have been combined into a pack wich can be found in the 'Vehicle Packs' section. Note that these skins are provied on an as-is basis and will need to be applied to the vehicle manually. I am unable to share the model with the packs due to me not owning them.
 
 **Private Work**
 
