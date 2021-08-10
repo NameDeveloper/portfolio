@@ -388,135 +388,138 @@ a {
   color: $blockquote-text-color;
 }
 
-@import "https://fonts.googleapis.com/css?family=Source+Code+Pro:200,900";
-/* bubbles */
-@keyframes "bubbles" {
-	from {
-		transform: translate();
-	}
-	to {
-		transform: translate(0, -66.666%);
-	}
+/*
+  https://developer.mozilla.org/en/docs/Web/CSS/box-shadow
+  box-shadow: [inset?] [top] [left] [blur] [size] [color];
+
+  Tips:
+    - We're setting all the blurs to 0 since we want a solid fill.
+    - Add the inset keyword so the box-shadow is on the inside of the element
+    - Animating the inset shadow on hover looks like the element is filling in from whatever side you specify ([top] and [left] accept negative values to become [bottom] and [right])
+    - Multiple shadows can be stacked
+    - If you're animating multiple shadows, be sure to keep the same number of shadows so the animation is smooth. Otherwise, you'll get something choppy.
+*/
+
+// Animate the size, inside
+.fill:hover,
+.fill:focus {
+  box-shadow: inset 0 0 0 2em var(--hover);
 }
-&:root {
-	--text-color: hsla(210, 50%, 85%, 1);
-	--shadow-color: hsla(210, 40%, 52%, .4);
-	--btn-color: hsl(210, 80%, 42%);
-	--bg-color: #141218;
+
+// Animate the size, outside
+.pulse:hover, 
+.pulse:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 2em rgba(#fff,0);
 }
-* {
-	box-sizing: border-box;
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
 }
-html {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: var(--bg-color);
+
+// Stack multiple shadows, one from the left, the other from the right
+.close:hover,
+.close:focus {
+  box-shadow: 
+    inset -3.5em 0 0 0 var(--hover),
+    inset 3.5em 0 0 0 var(--hover);  
 }
+
+// Size can also be negative; see how it's smaller than the element
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+
+// Animating from the bottom
+.up:hover,
+.up:focus {
+  box-shadow: inset 0 -3.25em 0 0 var(--hover);
+}
+
+// And from the left
+.slide:hover,
+.slide:focus {
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+}
+
+// Multiple shadows, one on the outside, another on the inside
+.offset {  
+  box-shadow: 
+    0.3em 0.3em 0 0 var(--color),
+    inset 0.3em 0.3em 0 0 var(--color);
+  
+  &:hover,
+  &:focus {
+    box-shadow: 
+      0 0 0 0 var(--hover),
+      inset 6em 3.5em 0 0 var(--hover);
+  }
+}
+
+//=== Set button colors
+// If you wonder why use Sass vars or CSS custom properties...
+  // Make a map with the class names and matching colors
+$colors: (
+  fill: #a972cb,
+  pulse: #ef6eae, 
+  close: #ff7f82, 
+  raise: #ffa260, 
+  up: #e4cb58, 
+  slide: #8fc866, 
+  offset: #19bc8b
+);
+
+// Sass variables compile to a static string; CSS variables are dynamic and inherited
+  // Loop through the map and set CSS custom properties using Sass variables
+@each $button, $color in $colors {
+  .#{$button} {
+    --color: #{$color};
+    --hover: #{adjust-hue($color, 45deg)};
+  }
+}
+
+// Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties.
+button {  
+  color: var(--color);
+  transition: 0.25s;
+  
+  &:hover,
+  &:focus { 
+    border-color: var(--hover);
+    color: #fff;
+  }
+}
+
+//=== Pen styling, ignore
 body {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: var(--bg-color);
+  color: #fff;
+  background: hsl(227, 10%, 10%);
+  font: 300 1em 'Fira Sans', sans-serif;
+  
+  // Center everything ever
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
 }
+
+// Basic button styles
 button {
-	position: relative;
-	padding: 10px 20px;
-	border: none;
-	background: none;
-	cursor: pointer;
-	font-family: "Source Code Pro";
-	font-weight: 900;
-	text-transform: uppercase;
-	font-size: 30px;
-	color: var(--text-color);
-	background-color: var(--btn-color);
-	box-shadow: var(--shadow-color) 2px 2px 22px;
-	border-radius: 4px;
-	z-index: 0;
-	overflow: hidden;
-	&:focus {
-		outline-color: transparent;
-		box-shadow: var(--btn-color) 2px 2px 22px;
-	}
-	&::after {
-		content: var(--content);
-		display: block;
-		position: absolute;
-		white-space: nowrap;
-		padding: 40px 40px;
-		pointer-events: none;
-		font-weight: 200;
-		top: -30px;
-		left: -20px;
-	}
-	&:hover {
-		.right {
-			&::after {
-				transform: translate(0, -47%) rotate(0deg);
-			}
-		}
-	}
-	.right {
-		&:hover {
-			&::after {
-				transform: translate(0, -50%) rotate(-7deg);
-			}
-		}
-	}
-	.left {
-		&:hover {
-			~ {
-				.right {
-					&::after {
-						transform: translate(0, -50%) rotate(7deg);
-					}
-				}
-			}
-		}
-	}
-	&::before {
-		content: '';
-		pointer-events: none;
-		opacity: .6;
-		background: radial-gradient(circle at 20% 35%, transparent 0, transparent 2px, var(--text-color) 3px, var(--text-color) 4px, transparent 4px), radial-gradient(circle at 75% 44%, transparent 0, transparent 2px, var(--text-color) 3px, var(--text-color) 4px, transparent 4px), radial-gradient(circle at 46% 52%, transparent 0, transparent 4px, var(--text-color) 5px, var(--text-color) 6px, transparent 6px);
-		width: 100%;
-		height: 300%;
-		top: 0;
-		left: 0;
-		position: absolute;
-		animation: bubbles 5s linear infinite both;
-	}
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
 }
-.right {
-	&::after {
-		content: var(--content);
-		display: block;
-		position: absolute;
-		white-space: nowrap;
-		padding: 40px 40px;
-		pointer-events: none;
-		top: -30px;
-		left: calc(-66% - 20px);
-		background-color: var(--bg-color);
-		color: transparent;
-		transition: transform .4s ease-out;
-		transform: translate(0, -90%) rotate(0deg);
-	}
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 66%;
-}
-.left {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	right: 66%;
+
+h1 { font-weight: 400; }
+
+code { 
+  color: #e4cb58;
+  font: inherit;
 }
