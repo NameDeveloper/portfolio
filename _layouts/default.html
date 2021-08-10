@@ -22,10 +22,14 @@
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
           <div class="buttons">
             <a href="https://namedeveloper.github.io/portfolio//public.html">
-            <button class="offset">Public Releases</button>
+              <button class="offset">Public Releases</button>
             </a>
-            <button class="offset"> <a href="https://namedeveloper.github.io/portfolio//error404.html"></a>Private Releases</button>
-            <button class="offset"> <a href="https://namedeveloper.github.io/portfolio//error404.html"></a>Planned Releases</button>    
+            <a href="https://namedeveloper.github.io/portfolio//error404.html">
+              <button class="offset">Private Releases</button>
+            </a>
+            <a href="https://namedeveloper.github.io/portfolio//error404.html">
+              <button class="offset">Planned Releases</button>
+            </a>    
           </div>
       {% if site.show_downloads %}
         <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
